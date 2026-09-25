@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="OrangeHRM Suite"
+       parallel="false"
+       preserve-order="true">
+
+    <test name="Login Test">
+        <classes>
+            <class name="tests.logintest"/>
+        </classes>
+    </test>
+
+    <test name="Employe Test">
+        <classes>
+            <class name="tests.Employe_test"/>
+            <class name="tests.Employe_validate_test"/>
+        </classes>
+    </test>
+
+</suite>

@@ -37,3 +37,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Selenium session ###
+src/main/resources/data/session.dat
