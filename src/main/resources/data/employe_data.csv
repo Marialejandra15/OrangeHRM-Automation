@@ -1,2 +1,2 @@
-firstName,middleName,lastName,employeeId,username,password,confirmPassword
-arbol,ito,grueso,1234,arbolito.grueso,Control123!,Control123!
+firstName,middleName,lastName,employeeId,username,password,confirmPassword,photoPath
+Ana,Maria,Lopez,1122,anita.com,Clave123!,Clave123!,C:/Users/Gabriela Portugal/Pictures/4305686.png

@@ -24,7 +24,8 @@ public class Employe_test extends BaseTest {
             String employeeId,
             String username,
             String password,
-            String confirmPassword
+            String confirmPassword,
+            String photoPath
     ) throws InterruptedException {
 
         System.out.println(
@@ -42,7 +43,8 @@ public class Employe_test extends BaseTest {
                 employeeId,
                 username,
                 password,
-                confirmPassword
+                confirmPassword,
+                photoPath
         );
 
         Thread.sleep(9000);

@@ -13,7 +13,7 @@ public class Employe_admin {
     private WebDriver webDriver;
     private WebDriverWait wait;
 
-    // Admin
+    //Admin
     private By adminButton =
             By.xpath("//a[contains(@href,'/admin/viewAdminModule')]");
 
@@ -34,8 +34,11 @@ public class Employe_admin {
             By.xpath("//label[normalize-space()='Username']/following::input[1]");
 
     // Status
-    private By status =
-            By.xpath("(//div[contains(@class,'oxd-select-text')])[2]");
+    private By status = By.xpath(
+            "//div[contains(@class,'oxd-input-group')]" +
+                    "[.//label[normalize-space()='Status']]" +
+                    "//div[contains(@class,'oxd-select-text')]"
+    );
 
     // Password
     private By passwordInput =
@@ -146,24 +149,21 @@ public class Employe_admin {
 
 
     public void selectStatus(String statusValue) {
+        String value = statusValue == null ? "" : statusValue.trim();
+        wait.until(ExpectedConditions.elementToBeClickable(status)).click();
+        By options = By.xpath("//div[contains(@class,'oxd-select-option')]");
 
-        wait.until(
-                ExpectedConditions.elementToBeClickable(status)
-        ).click();
-
-        By statusOption =
-                By.xpath(
-                        "//div[contains(@class,'oxd-select-option')]" +
-                                "[normalize-space()='" +
-                                statusValue +
-                                "']"
-                );
-
-        wait.until(
-                ExpectedConditions.elementToBeClickable(statusOption)
-        ).click();
+        WebElement option = wait.until(driver -> {
+            for (WebElement item : driver.findElements(options)) {
+                if (item.isDisplayed()
+                        && item.getText().trim().equalsIgnoreCase(value)) {
+                    return item;
+                }
+            }
+            return null;
+        });
+        option.click();
     }
-
 
     public void typePassword(String password) {
 

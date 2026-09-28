@@ -6,6 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 
 public class Employe {
@@ -66,6 +69,9 @@ public class Employe {
     private By searchButton =
             By.xpath("//button[normalize-space()='Search']");
 
+    // Photo
+    private By photoInput =
+            By.cssSelector("input[type='file']");
 
     public Employe(WebDriver webDriver) {
 
@@ -363,6 +369,23 @@ public class Employe {
         input.sendKeys(confirmPassword);
     }
 
+    public void uploadPhoto(String photoPath){
+        if(photoPath == null || photoPath.isBlank()){
+            return;
+        }
+        Path image =
+                Paths.get(photoPath.trim()).toAbsolutePath().normalize();
+
+        if (!Files.isRegularFile(image)) {
+            throw new IllegalArgumentException(
+                    "No se encontró la foto: " + image
+            );
+        }
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(photoInput))
+                .sendKeys(image.toString());
+    }
+
 
     public void clickSaveButton() {
 
@@ -381,7 +404,8 @@ public class Employe {
             String employeeId,
             String username,
             String password,
-            String confirmPassword
+            String confirmPassword,
+            String photoPath
     ) {
 
         clickPIM();
@@ -390,6 +414,7 @@ public class Employe {
         typeMiddleName(middleName);
         typeLastName(lastName);
         typeEmployeeId(employeeId);
+        uploadPhoto(photoPath);
         clickSwitch();
         typeUsername(username);
         typePassword(password);
