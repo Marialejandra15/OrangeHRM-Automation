@@ -27,7 +27,8 @@ public class Employe_validate_test extends BaseTest {
             String employeeId,
             String username,
             String password,
-            String confirmPassword
+            String confirmPassword,
+            String photoPath
     ) {
 
         System.out.println(

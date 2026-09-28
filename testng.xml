@@ -19,4 +19,10 @@
         </classes>
     </test>
 
+    <test name="Employe Admin Test">
+        <classes>
+            <class name="tests.employe_admin_test"/>
+        </classes>
+    </test>
+
 </suite>

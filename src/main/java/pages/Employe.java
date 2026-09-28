@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -396,6 +398,129 @@ public class Employe {
         ).click();
     }
 
+    public void saveEmployeeToCsv(
+            String firstName,
+            String middleName,
+            String username
+    ) {
+
+        String employeeName =
+                firstName + " " + middleName;
+
+        Path csvPath =
+                Paths.get(
+                        "src/main/resources/data/employe_admin.csv"
+                );
+
+        try {
+
+            String content =
+                    Files.readString(
+                            csvPath,
+                            StandardCharsets.UTF_8
+                    );
+
+            String[] lines =
+                    content.split("\\R");
+
+            if (lines.length < 2) {
+
+                throw new RuntimeException(
+                        "El CSV debe contener header y al menos una fila de datos."
+                );
+            }
+
+            String header =
+                    lines[0];
+
+            String[] values =
+                    lines[1].split(",", -1);
+
+            if (values.length < 5) {
+
+                throw new RuntimeException(
+                        "El CSV no contiene las 5 columnas esperadas."
+                );
+            }
+
+            // Columna employee
+            values[1] =
+                    employeeName;
+
+
+            // Username actual guardado en el CSV
+            String currentUsername =
+                    values[2];
+
+
+            // Generar el siguiente ID de 2 dígitos
+            int nextId = 1;
+
+            if (currentUsername.matches(".*\\d{2}$")) {
+
+                String lastTwoDigits =
+                        currentUsername.substring(
+                                currentUsername.length() - 2
+                        );
+
+                nextId =
+                        Integer.parseInt(lastTwoDigits) + 1;
+            }
+
+
+            // Username nuevo
+            String newUsername =
+                    username
+                            + String.format(
+                            "%02d",
+                            nextId
+                    );
+
+
+            // Columna username
+            values[2] =
+                    newUsername;
+
+
+            String updatedRow =
+                    String.join(",", values);
+
+            String updatedContent =
+                    header
+                            + System.lineSeparator()
+                            + updatedRow
+                            + System.lineSeparator();
+
+
+            Files.writeString(
+                    csvPath,
+                    updatedContent,
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.TRUNCATE_EXISTING
+            );
+
+
+            System.out.println(
+                    "Employee actualizado en CSV: "
+                            + employeeName
+            );
+
+            System.out.println(
+                    "Username actualizado en CSV: "
+                            + newUsername
+            );
+
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(
+                    "Error al actualizar el CSV: "
+                            + csvPath,
+                    e
+            );
+        }
+    }
+
 
     public void addEmploye(
             String firstName,
@@ -420,5 +545,9 @@ public class Employe {
         typePassword(password);
         typeConfirmPassword(confirmPassword);
         clickSaveButton();
+        saveEmployeeToCsv(
+                firstName,
+                middleName,
+                username);
     }
 }
