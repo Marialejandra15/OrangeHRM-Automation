@@ -6,6 +6,10 @@
        parallel="false"
        preserve-order="true">
 
+    <listeners>
+        <listener class-name="base.AllureScreenshotListener"/>
+    </listeners>
+
     <test name="Login Test">
         <classes>
             <class name="tests.logintest"/>

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Error de automatización",
+    "matchedStatuses": [
+      "broken"
+    ],
+    "messageRegex": ".*(WebDriver|NoSuchElementException|TimeoutException|ElementClickInterceptedException).*",
+    "traceRegex": ".*"
+  },
+  {
+    "name": "Error de validación",
+    "matchedStatuses": [
+      "failed"
+    ],
+    "messageRegex": ".*(AssertionError|assert).*",
+    "traceRegex": ".*"
+  },
+  {
+    "name": "Error de aplicación",
+    "matchedStatuses": [
+      "broken"
+    ],
+    "messageRegex": ".*",
+    "traceRegex": ".*"
+  }
+]

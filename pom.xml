@@ -66,6 +66,7 @@
                 <version>3.5.3</version>
 
                 <configuration>
+
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
@@ -75,6 +76,7 @@
                             ${project.build.directory}/allure-results
                         </allure.results.directory>
                     </systemPropertyVariables>
+
                 </configuration>
 
             </plugin>
@@ -84,6 +86,81 @@
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>2.16.1</version>
+
+                <configuration>
+
+                    <executorInfo>
+
+                        <reportName>
+                            OrangeHRM Automation - QA Report By Maria Alexandra Quintanilla - Gabriela Portugal
+                        </reportName>
+
+                        <name>
+                            OrangeHRM Automation
+                        </name>
+
+                        <type>
+                            generic
+                        </type>
+
+                        <buildName>
+                            QA Automation Execution
+                        </buildName>
+
+                    </executorInfo>
+
+                </configuration>
+
+            </plugin>
+
+            <!-- Copiar configuración de Allure -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+
+                <executions>
+
+                    <execution>
+
+                        <id>copy-allure-metadata</id>
+
+                        <phase>verify</phase>
+
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+
+                        <configuration>
+
+                            <outputDirectory>
+                                ${project.build.directory}/allure-results
+                            </outputDirectory>
+
+                            <resources>
+
+                                <resource>
+
+                                    <directory>
+                                        ${project.basedir}/src/test/resources
+                                    </directory>
+
+                                    <includes>
+                                        <include>environment.properties</include>
+                                        <include>executor.json</include>
+                                        <include>categories.json</include>
+                                    </includes>
+
+                                </resource>
+
+                            </resources>
+
+                        </configuration>
+
+                    </execution>
+
+                </executions>
+
             </plugin>
 
         </plugins>
